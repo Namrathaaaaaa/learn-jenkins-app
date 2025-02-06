@@ -6,7 +6,6 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "jest-junit": "^16.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -38,7 +37,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.39.0",
-    "@types/node": "^20.8.6"
+    "@types/node": "^20.8.6",
+    "jest-junit": "^16.0.0"
   },
   "jest-junit": {
     "suiteName": "jest tests",
