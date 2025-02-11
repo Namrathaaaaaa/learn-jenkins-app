@@ -92,6 +92,14 @@ pipeline {
                 '''
             }
         }
+        stage('Approval'){
+            steps{
+                sh '''
+                echo 'Approval Stage'
+                input message 'Ready to Deploy?', ok 'Yes , I am sure i want to Deploy'
+                '''
+            }
+        }
 
         stage('Deploy prod') {
             agent {
