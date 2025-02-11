@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    environment{
+    environment {
         NETLIFY_SITE_ID = '2e0170a0-7d2d-4c06-9ff6-06bf1dc15dac'
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
     }
@@ -17,7 +17,6 @@ pipeline {
             }
             steps {
                 sh '''
-                    echo 'Small change'
                     ls -la
                     node --version
                     npm --version
@@ -27,7 +26,7 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Tests') {
             parallel {
                 stage('Unit tests') {
@@ -70,12 +69,13 @@ pipeline {
 
                     post {
                         always {
-                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright local', reportTitles: '', useWrapperFileDirectly: true])
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Local', reportTitles: '', useWrapperFileDirectly: true])
                         }
                     }
                 }
             }
         }
+
         stage('Deploy') {
             agent {
                 docker {
@@ -85,14 +85,15 @@ pipeline {
             }
             steps {
                 sh '''
-                    npm install netlify-cli 
+                    npm install netlify-cli
                     node_modules/.bin/netlify --version
-                    echo "Deploying to production. SITE_ID : $NETLIFY_SITE_ID"
+                    echo "Deploying to production. Site ID: $NETLIFY_SITE_ID"
                     node_modules/.bin/netlify status
                     node_modules/.bin/netlify deploy --dir=build --prod
                 '''
             }
         }
+
         stage('Prod E2E') {
             agent {
                 docker {
@@ -100,7 +101,8 @@ pipeline {
                     reuseNode true
                 }
             }
-            environment{
+
+            environment {
                 CI_ENVIRONMENT_URL = 'https://glittery-otter-d2a31b.netlify.app'
             }
 
@@ -118,3 +120,7 @@ pipeline {
         }
     }
 }
+
+
+
+
